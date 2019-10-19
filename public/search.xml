@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Spring源码分析(二):概述</title>
+    <url>/2019/10/16/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%BA%8C-%E6%A6%82%E8%BF%B0/</url>
+    <content><![CDATA[<h3 id="版本历史"><a href="#版本历史" class="headerlink" title="版本历史"></a>版本历史</h3><ul>
+<li>第一版由 Rod Johnson 开发，并在2002年10月发布在 Expert One-on-One J2EE Design and Development 一书中</li>
+<li>2004年3月发布了里程碑的版本1.0</li>
+<li>2006年10月发布Spring 2.0</li>
+<li>2007年11月 Spring 2.5</li>
+<li>2009年12月 Spring 3.0</li>
+<li>2011年 Spring 3.1</li>
+<li>2013年11月 Spring 3.2.5</li>
+<li>2013年12月发布了4.0版本 [1]</li>
+<li>2017年9月 Spring Framework正式发布了5.0版本 [2]</li>
+</ul>
+<h3 id="核心模块"><a href="#核心模块" class="headerlink" title="核心模块"></a>核心模块</h3><p><img src="/images/spring-framwork-modules.png" alt="spring源码转换"></p>
+<p>[1]:Spring 4.0 版本中增加了对 Java SE 8, Groovy 2, Java EE 7 的一些方面以及 WebSocket 的支持<br>[2]:引入了 Spring WebFlux，一个高性能、响应式、异步的 Web 框架；重点加强了对函数式编程、响应式程序设计（reactive programming）的支持能力，是一个非常大的进步</p>
+<p>参考：<br>《Spring源码深度解析》<br><a href="https://www.docs4dev.com/docs/zh/spring-framework/4.3.21.RELEASE/reference" target="_blank" rel="noopener">Spring中文文档</a><br><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/index.html" target="_blank" rel="noopener">Spring英文文档</a></p>
+]]></content>
+      <categories>
+        <category>spring</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring源码分析(一):环境准备</title>
+    <url>/2019/10/10/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%80-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/</url>
+    <content><![CDATA[<h3 id="安装Gradle"><a href="#安装Gradle" class="headerlink" title="安装Gradle"></a><a href="https://gradle.org/install/#helpful-information" target="_blank" rel="noopener">安装Gradle</a></h3><ul>
+<li>Step1. Download</li>
+<li>Step2. Unpack the distribution</li>
+<li>Step3. Configure your system environment</li>
+<li>Step4. Verify your installation</li>
+</ul>
+<a id="more"></a>
+
+<h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a><a href="https://git-scm.com/downloads" target="_blank" rel="noopener">安装Git</a></h3><h3 id="下载Spring"><a href="#下载Spring" class="headerlink" title="下载Spring"></a>下载Spring</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/spring-projects/spring-framework.git</span><br></pre></td></tr></table></figure>
+<h3 id="源码转换"><a href="#源码转换" class="headerlink" title="源码转换"></a>源码转换</h3><p><img src="/images/spring-convert.png" alt="spring源码转换"><br>进入spring目录，找到import-into-idea.md，按步骤转换</p>
+]]></content>
+      <categories>
+        <category>spring</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo + github搭建个人博客</title>
+    <url>/2019/09/26/hexo/</url>
+    <content><![CDATA[<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
+<li>检查安装<br>git -v<br>node -v</li>
+<li>安装 <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Git</a></li>
+<li>安装 <a href="https://nodejs.org/zh-cn/download/" target="_blank" rel="noopener">Node.js</a></li>
+</ul>
+<a id="more"></a>
+<h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">安装hexo</a></h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br><span class="line">$ hexo init hexo</span><br><span class="line">$ cd hexo</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+<h3 id="关联github"><a href="#关联github" class="headerlink" title="关联github"></a>关联github</h3><ul>
+<li>登录github账号创建仓库，命名：username.github.io<br>注：username为github用户名，例：xingly.github.io</li>
+<li>GitHub 添加 SSH key</li>
+<li>进入hexo目录，修改站点配置文件(_config.yml)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: git@github.com:xingly/xingly.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+<h3 id="主题NexT"><a href="#主题NexT" class="headerlink" title="主题NexT"></a><a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">主题NexT</a></h3><h3 id="hexo-admin安装"><a href="#hexo-admin安装" class="headerlink" title="hexo-admin安装"></a>hexo-admin安装</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ cd hexo</span><br><span class="line">$ npm install --save hexo-admin</span><br></pre></td></tr></table></figure>
+<h3 id="hexo-deployer-git安装"><a href="#hexo-deployer-git安装" class="headerlink" title="hexo-deployer-git安装"></a>hexo-deployer-git安装</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ cd hexo</span><br><span class="line">$ npm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
+<h3 id="hexo常用命令"><a href="#hexo常用命令" class="headerlink" title="hexo常用命令"></a><a href="https://hexo.io/zh-cn/docs/commands" target="_blank" rel="noopener">hexo常用命令</a></h3>]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+</search>
