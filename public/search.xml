@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Spring源码分析(四):AOP</title>
-    <url>/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E5%9B%9B-AOP/</url>
-    <content><![CDATA[]]></content>
+    <title>Spring源码分析(四):核心接口</title>
+    <url>/2019/10/29/Spring-core-interface/</url>
+    <content><![CDATA[<h3 id="Beanfactory"><a href="#Beanfactory" class="headerlink" title="Beanfactory"></a>Beanfactory</h3><h3 id="ApplicationContext"><a href="#ApplicationContext" class="headerlink" title="ApplicationContext"></a>ApplicationContext</h3><p>// TODO …</p>
+]]></content>
       <categories>
         <category>spring</category>
       </categories>
@@ -12,13 +13,46 @@
       </tags>
   </entry>
   <entry>
-    <title>Spring源码分析(三):IoC 容器</title>
-    <url>/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%89-IoC%E5%AE%B9%E5%99%A8/</url>
-    <content><![CDATA[<h3 id="IoC-控制反转"><a href="#IoC-控制反转" class="headerlink" title="IoC(控制反转)"></a>IoC(控制反转)</h3><ul>
-<li>含义：Java bean创建对象的控制权由程序移交给容器，就是由容器实例化、管理对象</li>
-<li>对于IoC进一步了解，参考Martin Fowler2004年在<a href="https://martinfowler.com/articles/injection.html" target="_blank" rel="noopener">他的网站</a>上的论述</li>
+    <title>Spring源码分析(三):IoC容器</title>
+    <url>/2019/10/29/Spring-IoC/</url>
+    <content><![CDATA[<h3 id="1-1-什么是IoC"><a href="#1-1-什么是IoC" class="headerlink" title="1.1 什么是IoC"></a>1.1 什么是IoC</h3><p>IoC-<strong>Inversion of Control</strong>，即“控制反转，它不是一种技术，而是一种设计思想。在Java开发中，Ioc意味着将你设计好的对象交给容器控制，而不是应用程序在对象内部直接控制。</p>
+<ul>
+<li><p>谁控制谁，控制什么：传统Java SE程序设计，我们直接在对象内部通过new进行创建对象，是程序主动去创建依赖对象；而IoC是有专门一个容器来创建这些对象，即由Ioc容器来控制对象的创建</p>
+</li>
+<li><p>为何是反转，哪些方面反转了：有反转就有正转，传统应用程序是由我们自己在对象中主动控制去直接获取依赖对象，也就是正转；而反转则是由容器来帮忙创建及注入依赖对象；为何是反转？因为由容器帮我们查找及注入依赖对象，对象只是被动的接受依赖对象，所以是反转；哪些方面反转了？依赖对象的获取被反转了</p>
+<p>  所谓IoC，就是由Spring IoC容器来负责对象的生命周期和对象之间的关系</p>
+</li>
 </ul>
-<h3 id="bean的解析"><a href="#bean的解析" class="headerlink" title="bean的解析"></a>bean的解析</h3><h3 id="bean的加载"><a href="#bean的加载" class="headerlink" title="bean的加载"></a>bean的加载</h3>]]></content>
+<h3 id="1-2-什么是DI"><a href="#1-2-什么是DI" class="headerlink" title="1.2 什么是DI"></a>1.2 什么是DI</h3><p>DI—Dependency Injection，即“依赖注入”：是组件之间依赖关系由容器在运行期决定，形象的说，即由容器动态的将某个依赖关系注入到组件之中。</p>
+<ul>
+<li>谁依赖于谁：当然是应用程序依赖于IoC容器</li>
+<li>为什么需要依赖：应用程序需要IoC容器来提供对象需要的外部资源</li>
+<li>谁注入谁：很明显是IoC容器注入应用程序某个对象，应用程序依赖的对象</li>
+<li>注入了什么：就是注入某个对象所需要的外部资源（包括对象、资源、常量数据）</li>
+</ul>
+<h3 id="1-3-IoC和DI的关系"><a href="#1-3-IoC和DI的关系" class="headerlink" title="1.3 IoC和DI的关系"></a>1.3 IoC和DI的关系</h3><p>一种观点认为：它们是同一个概念的不同角度描述，由于控制反转概念比较含糊（可能只是理解为容器控制对象这一个层面，很难让人想到谁来维护对象关系），所以2004年大师级人物Martin Fowler又给出了一个新的名字：“依赖注入”，相对IoC 而言，<strong>“依赖注入”明确描述了“被注入对象依赖IoC容器配置依赖对象”</strong>。</p>
+<h3 id="1-4-注入方式"><a href="#1-4-注入方式" class="headerlink" title="1.4 注入方式"></a>1.4 注入方式</h3><p>DI主要有两种方式：基于构造函数的依赖注入和基于Setter的依赖注入。</p>
+<p>（1）基于构造函数的依赖注入<br>基于构造函数的依赖注入由容器调用具有多个arguments的构造函数完成，每个arguments表示一个依赖项。调用具有特定arguments的static工厂方法来构造bean几乎是等效的，本讨论同样将arguments视为构造函数和static工厂方法。以下example显示了一个只能使用构造函数注入的class。这个class没有什么特别之处，它是一个POJO，它不依赖于容器特定的接口，base classes或annotations。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class SimpleMovieLister &#123;</span><br><span class="line"></span><br><span class="line">    // SimpleMovieLister依赖于MovieFinder</span><br><span class="line">    private MovieFinder movieFinder;</span><br><span class="line">    </span><br><span class="line">    // 构造函数，以便Spring容器可以注入MovieFinder</span><br><span class="line">    public SimpleMovieLister(MovieFinder movieFinder) &#123;</span><br><span class="line">        this.movieFinder = movieFinder;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 使用注入MovieFinder的业务逻辑被省略…</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（2）基于Setter的依赖注入<br>基于Setter的依赖注入是在beans上调用setter方法的容器来完成的，它在调用no-argument构造函数或no-argument的static工厂方法实例化bean之后。以下example显示了一个只能使用纯setter注入的class。它是一个POJO，它不依赖于容器特定的接口，base classes或annotations.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class SimpleMovieLister &#123;</span><br><span class="line"></span><br><span class="line">    // SimpleMovieLister依赖于MovieFinder</span><br><span class="line">    private MovieFinder movieFinder;</span><br><span class="line"></span><br><span class="line">    // setter方法，以便Spring容器可以注入MovieFinder</span><br><span class="line">    public void setMovieFinder(MovieFinder movieFinder) &#123;</span><br><span class="line">        this.movieFinder = movieFinder;</span><br><span class="line">    &#125;</span><br><span class="line">    // 使用注入MovieFinder的业务逻辑被省略…</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-容器的基本实现"><a href="#2-容器的基本实现" class="headerlink" title="2. 容器的基本实现"></a>2. 容器的基本实现</h3><h4 id="2-1-什么是IoC容器"><a href="#2-1-什么是IoC容器" class="headerlink" title="2.1 什么是IoC容器"></a>2.1 什么是IoC容器</h4><p>IoC容器就是具有依赖注入功能的容器，IoC容器负责实例化、定位、配置应用程序中的对象及建立这些对象间的依赖。应用程序无需直接在代码中new相关的对象，交给IoC容器进行组装。</p>
+<h4 id="2-2-IoC容器是如何工作的"><a href="#2-2-IoC容器是如何工作的" class="headerlink" title="2.2 IoC容器是如何工作的"></a>2.2 IoC容器是如何工作的</h4><p>先看一个简单的例子：</p>
+<p>配置文件spring.xml</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">        https://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;bean id=&quot;myTestBean&quot; class=&quot;com.test.MyTestBean&quot; /&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<p>普通的bean MyTestBean</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class MyTestBean &#123;</span><br><span class="line">    private String testStr = &quot;testStr&quot;;</span><br><span class="line">    </span><br><span class="line">    public String getTestStr() &#123;</span><br><span class="line">        return testStr;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void setTestStr(String testStr) &#123;</span><br><span class="line">        this.testStr = testStr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试代码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">public class MyTeset &#123;</span><br><span class="line">    @Test</span><br><span class="line">    public void testSimpleLoad() &#123;</span><br><span class="line">        //1、读取配置文件实例化一个IoC容器</span><br><span class="line">        ApplicationContext context = new ClassPathXmlApplicationContext(&quot;helloworld.xml&quot;);</span><br><span class="line">        </span><br><span class="line">        //2、从容器中获取Bean</span><br><span class="line">        MyTestBean myTestBean = context.getBean(&quot;myTestBean&quot;);</span><br><span class="line">        </span><br><span class="line">        //3、执行业务逻辑</span><br><span class="line">        myTestBean.getTestStr();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的测试代码完成的功能无非就是以下几点：</p>
+<p>（1）读取spring.xml配置文件</p>
+<p>（2）根据spring.xml中的配置找到对应的类的配置，并实例化</p>
+<p>（3）调用实例化后的实例</p>
+<p>可以用下面的图简单的展示：<br><img src="/images/spring-ioc-container.png" alt="IoC容器执行过程"></p>
+<pre><code>总结：Spring IoC容器通过读取配置文件中的配置元数据，对应用中的各个对象进行实例化及装配。一般使用基于xml配置文件进行配置元数据，而且Spring与配置文件完全解耦的，可以使用其他任何可能的方式进行配置元数据，比如注解、基于java文件的、基于属性文件的配置都可以。</code></pre>]]></content>
       <categories>
         <category>spring</category>
       </categories>
@@ -28,7 +62,7 @@
   </entry>
   <entry>
     <title>Spring源码分析(二):环境准备</title>
-    <url>/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%BA%8C-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/</url>
+    <url>/2019/10/29/Spring-build-environment/</url>
     <content><![CDATA[<h3 id="安装Gradle"><a href="#安装Gradle" class="headerlink" title="安装Gradle"></a><a href="https://gradle.org/install/#helpful-information" target="_blank" rel="noopener">安装Gradle</a></h3><ul>
 <li>Step1. Download</li>
 <li>Step2. Unpack the distribution</li>
@@ -49,7 +83,7 @@
   </entry>
   <entry>
     <title>Spring源码分析(一):概述</title>
-    <url>/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%80-%E6%A6%82%E8%BF%B0/</url>
+    <url>/2019/10/29/Spring-Overview/</url>
     <content><![CDATA[<h3 id="Spring概述"><a href="#Spring概述" class="headerlink" title="Spring概述"></a>Spring概述</h3><h4 id="1-1-Spring是什么"><a href="#1-1-Spring是什么" class="headerlink" title="1.1 Spring是什么"></a>1.1 Spring是什么</h4><p>Spring是一个开源的轻量级Java SE/Java EE开发应用框架，其目的是用于简化企业级应用程序开发。</p>
 <ul>
 <li>开源是指Spring<strong><a href="https://github.com/spring-projects/spring-framework" target="_blank" rel="noopener">源码</a></strong>托管在github上；</li>
@@ -68,7 +102,7 @@
 <li>首先，要明确Spring是什么，能帮我们做些什么，再参考官网自己写个demo或者debug下Spring源码中的例子，这样就基本知道怎么使用Spring了。</li>
 <li>其次，IoC容器及AOP是Spring的核心，尤其是IoC容器，其他所有技术都是基于它实现的。AOP意思是面向切面编程，提供从另一个角度来考虑程序结构以完善面向对象编程（相对于OOP），即可以通过在编译期间、装载期间或运行期间实现在不修改源代码的情况下给程序动态添加功能的一种技术。IoC和AOP是Spring基础，要想学好Spring，必须打牢基础。</li>
 </ul>
-<h3 id="Spring基础"><a href="#Spring基础" class="headerlink" title="Spring基础"></a>Spring基础</h3><h4 id="2-1-Spring架构图"><a href="#2-1-Spring架构图" class="headerlink" title="2.1 Spring架构图"></a>2.1 Spring架构图</h4><p><img src="/images/spring-framwork-modules.png" alt="spring源码转换"></p>
+<h3 id="Spring基础"><a href="#Spring基础" class="headerlink" title="Spring基础"></a>Spring基础</h3><h4 id="2-1-Spring架构图"><a href="#2-1-Spring架构图" class="headerlink" title="2.1 Spring架构图"></a>2.1 Spring架构图</h4><p><img src="/images/spring-framwork-modules.png" alt="Spring架构图"></p>
 <p>Spring框架是一个分层架构，分为大约20个模块，这些模块按照分层被总结为以下5个部分。</p>
 <p>(1) Core Container<br>核心容器包含Core、Beans、Context和Expression Language模块<br>Core和Beans模块是框架的基础部分，提供IoC和依赖注入特性。这里的基础概念是BeanFactory，它提供对Factory模式的经典实现来消除对程序性单例模式的需要，并真正地允许你从程序逻辑中分离出依赖关系和配置。</p>
 <ul>
@@ -110,7 +144,9 @@
 <li>2017年9月 Spring Framework正式发布了5.0版本 [2]</li>
 </ul>
 <p>[1]:Spring 4.0 版本中增加了对 Java SE 8, Groovy 2, Java EE 7 的一些方面以及 WebSocket 的支持<br>[2]:引入了 Spring WebFlux，一个高性能、响应式、异步的 Web 框架；重点加强了对函数式编程、响应式程序设计（reactive programming）的支持能力，是一个非常大的进步</p>
-<p>参考：<br>《Spring源码深度解析》<br><a href="https://www.docs4dev.com/docs/zh/spring-framework/4.3.21.RELEASE/reference" target="_blank" rel="noopener">Spring中文文档</a><br><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/index.html" target="_blank" rel="noopener">Spring英文文档</a></p>
+<p>参考：<br>《Spring源码深度解析》<br><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/index.html" target="_blank" rel="noopener">《Spring官方文档》</a></p>
+<!-- Spring中文文档：(https://www.docs4dev.com/docs/zh/spring-framework/4.3.21.RELEASE/reference) -->
+
 ]]></content>
       <categories>
         <category>spring</category>

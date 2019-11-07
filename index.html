@@ -96,7 +96,7 @@
     root: '/',
     scheme: 'Mist',
     version: '5.1.4',
-    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"right","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -304,7 +304,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E5%9B%9B-AOP/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/29/Spring-core-interface/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="eason">
@@ -323,7 +323,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E5%9B%9B-AOP/" itemprop="url">Spring源码分析(四):AOP</a></h1>
+                <a class="post-title-link" href="/2019/10/29/Spring-core-interface/" itemprop="url">Spring源码分析(四):核心接口</a></h1>
         
 
         <div class="post-meta">
@@ -376,8 +376,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E5%9B%9B-AOP/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E5%9B%9B-AOP/" itemprop="commentCount"></span>
+                <a href="/2019/10/29/Spring-core-interface/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/10/29/Spring-core-interface/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -407,11 +407,12 @@
       
         
           
-          
+          BeanfactoryApplicationContext// TODO …
+
           
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E5%9B%9B-AOP/#more" rel="contents">
+            <a class="btn" href="/2019/10/29/Spring-core-interface/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -462,7 +463,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%89-IoC%E5%AE%B9%E5%99%A8/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/29/Spring-IoC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="eason">
@@ -481,7 +482,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%89-IoC%E5%AE%B9%E5%99%A8/" itemprop="url">Spring源码分析(三):IoC 容器</a></h1>
+                <a class="post-title-link" href="/2019/10/29/Spring-IoC/" itemprop="url">Spring源码分析(三):IoC容器</a></h1>
         
 
         <div class="post-meta">
@@ -534,8 +535,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%89-IoC%E5%AE%B9%E5%99%A8/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%89-IoC%E5%AE%B9%E5%99%A8/" itemprop="commentCount"></span>
+                <a href="/2019/10/29/Spring-IoC/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/10/29/Spring-IoC/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -565,15 +566,13 @@
       
         
           
-          IoC(控制反转)
-含义：Java bean创建对象的控制权由程序移交给容器，就是由容器实例化、管理对象
-对于IoC进一步了解，参考Martin Fowler2004年在他的网站上的论述
+          1.1 什么是IoCIoC-Inversion of Control，即“控制反转，它不是一种技术，而是一种设计思想。在Java开发中，Ioc意味着将你设计好的对象交给容器控制，而不是应用程序在对象内部直接控制。
 
-bean的解析bean的加载
-          
+谁控制谁，控制什么：传统Java SE程序设计，我们直接在对象内部通过new进行创建
+          ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%89-IoC%E5%AE%B9%E5%99%A8/#more" rel="contents">
+            <a class="btn" href="/2019/10/29/Spring-IoC/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -624,7 +623,7 @@ bean的解析bean的加载
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%BA%8C-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/29/Spring-build-environment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="eason">
@@ -643,7 +642,7 @@ bean的解析bean的加载
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%BA%8C-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/" itemprop="url">Spring源码分析(二):环境准备</a></h1>
+                <a class="post-title-link" href="/2019/10/29/Spring-build-environment/" itemprop="url">Spring源码分析(二):环境准备</a></h1>
         
 
         <div class="post-meta">
@@ -696,8 +695,8 @@ bean的解析bean的加载
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%BA%8C-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%BA%8C-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/" itemprop="commentCount"></span>
+                <a href="/2019/10/29/Spring-build-environment/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/10/29/Spring-build-environment/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -734,7 +733,7 @@ bean的解析bean的加载
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%BA%8C-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/#more" rel="contents">
+            <a class="btn" href="/2019/10/29/Spring-build-environment/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -785,7 +784,7 @@ bean的解析bean的加载
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%80-%E6%A6%82%E8%BF%B0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/29/Spring-Overview/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="eason">
@@ -804,7 +803,7 @@ bean的解析bean的加载
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%80-%E6%A6%82%E8%BF%B0/" itemprop="url">Spring源码分析(一):概述</a></h1>
+                <a class="post-title-link" href="/2019/10/29/Spring-Overview/" itemprop="url">Spring源码分析(一):概述</a></h1>
         
 
         <div class="post-meta">
@@ -857,8 +856,8 @@ bean的解析bean的加载
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%80-%E6%A6%82%E8%BF%B0/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%80-%E6%A6%82%E8%BF%B0/" itemprop="commentCount"></span>
+                <a href="/2019/10/29/Spring-Overview/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/10/29/Spring-Overview/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -896,7 +895,7 @@ bean的解析bean的加载
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/10/29/Spring%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%80-%E6%A6%82%E8%BF%B0/#more" rel="contents">
+            <a class="btn" href="/2019/10/29/Spring-Overview/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
